@@ -19,25 +19,41 @@ namespace videogame_api.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<ActionResult<ServiceResponse<List<Videogame>>>> GetAll()
+        public async Task<ActionResult<ServiceResponse<List<GetVideogameDto>>>> GetAll()
         {
             return Ok(await _videogameService.GetAllVideogames());
         }
         [HttpGet("id")]
-        public async Task<ActionResult<ServiceResponse<Videogame>>> Get(int id)
+        public async Task<ActionResult<ServiceResponse<GetVideogameDto>>> Get(int id)
         {
             return Ok(await _videogameService.GetVideogame(id));
         }
 
         [HttpPost]
-        public async Task<ActionResult<ServiceResponse<List<Videogame>>>> Create(Videogame game)
+        public async Task<ActionResult<ServiceResponse<List<GetVideogameDto>>>> Create(AddVideogameDto game)
         {
             return Ok(await _videogameService.AddVideogame(game));
         }
         [HttpDelete("id")]
-        public async Task<ActionResult<ServiceResponse<Videogame>>> Delete(int id)
+        public async Task<ActionResult<ServiceResponse<List<GetVideogameDto>>>> Delete(int id)
         {
-            return Ok(await _videogameService.DeleteVideogame(id));
+            var response = await _videogameService.DeleteVideogame(id);
+            if (response.Data is null)
+            {
+                return NotFound(response);
+            }
+            return Ok(response);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<ServiceResponse<List<GetVideogameDto>>>> Update(UpdateVideogameDto game)
+        {
+            var response = await _videogameService.UpdateVideogame(game);
+            if (response.Data is null)
+            {
+                return NotFound(response);
+            }
+            return Ok(response);
         }
     }
 }
