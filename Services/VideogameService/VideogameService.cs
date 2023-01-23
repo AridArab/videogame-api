@@ -41,7 +41,7 @@ namespace videogame_api.Services.VideogameService
         public async Task<ServiceResponse<GetVideogameDto>> GetVideogame(int id)
         {
             var serviceResponse = new ServiceResponse<GetVideogameDto>();
-            var dbVideogame = await _context.Videogames.FirstOrDefaultAsync(c => c.Id == id);
+            var dbVideogame = await _context.Videogames.FirstOrDefaultAsync(g => g.Id == id);
             serviceResponse.Data = _mapper.Map<GetVideogameDto>(dbVideogame);
             return serviceResponse;
         }
@@ -50,7 +50,8 @@ namespace videogame_api.Services.VideogameService
         {
             var serviceResponse = new ServiceResponse<List<GetVideogameDto>>();
             var newGame = _mapper.Map<Videogame>(game);
-            newGame.Id = games.Max(g => g.Id) + 1;
+            await _context.Videogames.AddAsync(newGame);
+            await _context.SaveChangesAsync();
             games.Add(_mapper.Map<Videogame>(newGame));
             serviceResponse.Data = games.Select(g => _mapper.Map<GetVideogameDto>(g)).ToList();
             return serviceResponse;
@@ -62,15 +63,21 @@ namespace videogame_api.Services.VideogameService
 
             try 
             {
-                var game = games.FirstOrDefault(g => g.Id == id);
+                var game =  await _context.Videogames.Where(g => g.Id == id).FirstOrDefaultAsync();
                 if (game is null)
                 {
                     throw new Exception($"Videogame with id '{id}' not found.");
                 }
-            
-                games.Remove(game);
+                else
+                {
+                    _context.Videogames.Remove(game);
+                    await _context.SaveChangesAsync();
+                    var games = await _context.Videogames.ToListAsync();
+                    serviceResponse.Data =  games.Select(g => _mapper.Map<GetVideogameDto>(g)).ToList();
+                }
+                
 
-                serviceResponse.Data = games.Select(g => _mapper.Map<GetVideogameDto>(g)).ToList();
+                
             }
 
             catch (Exception ex)
@@ -92,18 +99,20 @@ namespace videogame_api.Services.VideogameService
             var serviceResponse = new ServiceResponse<GetVideogameDto>();
 
             try {
-            var game = games.FirstOrDefault(g => g.Id == updatedVideogame.Id);
+            var game = await _context.Videogames.FirstOrDefaultAsync(g => g.Id == updatedVideogame.Id);
             if (game is null)
             {
                 throw new Exception($"Videogame with id '{updatedVideogame.Id}' not found.");
             }
             
+
             game.Name = updatedVideogame.Name;
             game.Genre = updatedVideogame.Genre;
             game.Multiplayer = updatedVideogame.Multiplayer;
             game.AgeRating = updatedVideogame.AgeRating;
             game.GameRating = updatedVideogame.GameRating;
             game.Exclusive = updatedVideogame.Exclusive;
+            await _context.SaveChangesAsync();
 
             serviceResponse.Data = _mapper.Map<GetVideogameDto>(game);
             }
@@ -117,5 +126,15 @@ namespace videogame_api.Services.VideogameService
             return serviceResponse;
 
         }
+
+        /*async Task<ServiceResponse<List<GetVideogameDto>>> IVideogameService.GetVideogameByGenre(Genres genre)
+        {
+            var serviceResponse = new ServiceResponse<GetVideogameDto>();
+            var games = await _context.Videogames.ToListAsync();
+
+            try {
+                specificGames = await _context.Videogames.
+            }
+        }*/
     }
 }

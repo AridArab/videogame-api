@@ -23,18 +23,25 @@ namespace videogame_api.Controllers
         {
             return Ok(await _videogameService.GetAllVideogames());
         }
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<ServiceResponse<GetVideogameDto>>> Get(int id)
         {
             return Ok(await _videogameService.GetVideogame(id));
         }
+
+        /*[HttpGet("{genre}")]
+        public async Task<ActionResult<ServiceResponse<GetVideogameDto>>> GetGenre(Genres genre)
+        {
+            return genre;
+        }*/
+
 
         [HttpPost]
         public async Task<ActionResult<ServiceResponse<List<GetVideogameDto>>>> Create(AddVideogameDto game)
         {
             return Ok(await _videogameService.AddVideogame(game));
         }
-        [HttpDelete("id")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<ServiceResponse<List<GetVideogameDto>>>> Delete(int id)
         {
             var response = await _videogameService.DeleteVideogame(id);

@@ -13,6 +13,7 @@ namespace videogame_api.Services.VideogameService
         Task<ServiceResponse<List<GetVideogameDto>>> AddVideogame(AddVideogameDto newVideogame);
         Task<ServiceResponse<GetVideogameDto>> UpdateVideogame(UpdateVideogameDto updatedVideogame);
         Task<ServiceResponse<List<GetVideogameDto>>> DeleteVideogame(int id);
+        /*Task<ServiceResponse<List<GetVideogameDto>>> GetVideogameByGenre(Genres genre);*/
 
     }
 }
