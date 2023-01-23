@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -127,14 +128,28 @@ namespace videogame_api.Services.VideogameService
 
         }
 
-        /*async Task<ServiceResponse<List<GetVideogameDto>>> IVideogameService.GetVideogameByGenre(Genres genre)
+        async Task<ServiceResponse<List<GetVideogameDto>>> IVideogameService.GetVideogameByGenre(Genres genre)
         {
-            var serviceResponse = new ServiceResponse<GetVideogameDto>();
-            var games = await _context.Videogames.ToListAsync();
+            var serviceResponse = new ServiceResponse<List<GetVideogameDto>>();
+            
 
             try {
-                specificGames = await _context.Videogames.
+                var games = await _context.Videogames.Where(g => g.Genre == genre).ToListAsync();
+                if (games == null)
+                {
+                    throw new Exception($"Genre '{genre}' not valid. Please input a valid genre.");
+                }
+
+                serviceResponse.Data = _mapper.Map<List<GetVideogameDto>>(games);
             }
-        }*/
+
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+        
+            return serviceResponse;
+        }
     }
 }

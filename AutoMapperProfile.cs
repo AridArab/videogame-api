@@ -10,6 +10,8 @@ namespace videogame_api
         public AutoMapperProfile()
         {
             CreateMap<Videogame, GetVideogameDto>();
+            CreateMap<GetVideogameDto, Videogame>();
+            CreateMap<GetVideogameDto, List<Videogame>>();
             CreateMap<AddVideogameDto, Videogame>();
         }
     }

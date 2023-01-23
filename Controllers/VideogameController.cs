@@ -23,17 +23,17 @@ namespace videogame_api.Controllers
         {
             return Ok(await _videogameService.GetAllVideogames());
         }
-        [HttpGet("{id}")]
+        [HttpGet("{id:guid}")]
         public async Task<ActionResult<ServiceResponse<GetVideogameDto>>> Get(int id)
         {
             return Ok(await _videogameService.GetVideogame(id));
         }
 
-        /*[HttpGet("{genre}")]
+        [HttpGet("{genre}")]
         public async Task<ActionResult<ServiceResponse<GetVideogameDto>>> GetGenre(Genres genre)
         {
-            return genre;
-        }*/
+            return Ok(await _videogameService.GetVideogameByGenre(genre));
+        }
 
 
         [HttpPost]
