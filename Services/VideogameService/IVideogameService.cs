@@ -8,6 +8,7 @@ namespace videogame_api.Services.VideogameService
 {
     public interface IVideogameService
     {
+        /* Interface that lists all methods for VideogameService. */
         Task<ServiceResponse<List<GetVideogameDto>>> GetAllVideogames();
         Task<ServiceResponse<GetVideogameDto>> GetVideogame(int id);
         Task<ServiceResponse<List<GetVideogameDto>>> AddVideogame(AddVideogameDto newVideogame);

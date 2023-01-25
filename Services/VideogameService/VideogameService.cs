@@ -10,11 +10,18 @@ namespace videogame_api.Services.VideogameService
 {
     public class VideogameService : IVideogameService
     {
+        // Class that creates all methods for the routes in the VideogameController class.
+
+        /* creates an empty videogame object. */
         private static List<Videogame> games = new List<Videogame>
         {
             new Videogame()
         };
+
+        /* Defines the mapper used for the VideogameService methods. */
         private readonly IMapper _mapper;
+
+        /* Defines the datacontext used for the VideogameService methods. */
         private readonly DataContext _context;
 
         public VideogameService(IMapper mapper, DataContext context)
@@ -23,7 +30,7 @@ namespace videogame_api.Services.VideogameService
             _mapper = mapper;
         }
 
-
+        /* Method that retrieves all entries in the database. */
         public async Task<ServiceResponse<List<GetVideogameDto>>> GetAllVideogames()
         {
             var serviceResponse = new ServiceResponse<List<GetVideogameDto>>();
@@ -33,6 +40,7 @@ namespace videogame_api.Services.VideogameService
             return serviceResponse;
         }
 
+        /* Method that retrieves a specific entry in the database using its ID. */
         public async Task<ServiceResponse<GetVideogameDto>> GetVideogame(int id)
         {
             var serviceResponse = new ServiceResponse<GetVideogameDto>();
@@ -42,6 +50,7 @@ namespace videogame_api.Services.VideogameService
             return serviceResponse;
         }
 
+        /* Method that adds an entry into the database. */
         public async Task<ServiceResponse<List<GetVideogameDto>>> AddVideogame(AddVideogameDto game)
         {
             var serviceResponse = new ServiceResponse<List<GetVideogameDto>>();
@@ -53,6 +62,7 @@ namespace videogame_api.Services.VideogameService
             return serviceResponse;
         }
 
+        /* Method that deletes an entry in the database. */
         public async Task<ServiceResponse<List<GetVideogameDto>>> DeleteVideogame(int id)
         {
             var serviceResponse = new ServiceResponse<List<GetVideogameDto>>();
@@ -88,7 +98,7 @@ namespace videogame_api.Services.VideogameService
             
         }
 
-
+        /* Method that updates an entry in the database. */
         public async Task<ServiceResponse<GetVideogameDto>> UpdateVideogame(UpdateVideogameDto updatedVideogame)
         {
             var serviceResponse = new ServiceResponse<GetVideogameDto>();
@@ -123,6 +133,7 @@ namespace videogame_api.Services.VideogameService
 
         }
 
+        /* Method that retrieves all entries in the database with the same genre. */
         public async Task<ServiceResponse<List<GetVideogameDto>>> GetVideogameByGenre(Genres genre)
         {
             var serviceResponse = new ServiceResponse<List<GetVideogameDto>>();
@@ -148,6 +159,7 @@ namespace videogame_api.Services.VideogameService
             return serviceResponse;
         }
 
+        /* Method that retrieves all entries in the database with the same age rating. */
         public async Task<ServiceResponse<List<GetVideogameDto>>> GetVideogameByRating(AgeRatings rating)
         {
             var serviceResponse = new ServiceResponse<List<GetVideogameDto>>();
@@ -173,6 +185,7 @@ namespace videogame_api.Services.VideogameService
             return serviceResponse;
         }
 
+        /* Method that retrieves all entries in the database with the same game rating. */
         public async Task<ServiceResponse<List<GetVideogameDto>>> GetVideogameByReview(GameRatings rating)
         {
             var serviceResponse = new ServiceResponse<List<GetVideogameDto>>();
@@ -198,6 +211,7 @@ namespace videogame_api.Services.VideogameService
             return serviceResponse;
         }
 
+        /* Method that retrieves all entries in the database that are tied to the same platform. */
         public async Task<ServiceResponse<List<GetVideogameDto>>> GetVideogameByExclusive(Exclusives exclusive)
         {
             var serviceResponse = new ServiceResponse<List<GetVideogameDto>>();

@@ -2,6 +2,9 @@ using System.Text.Json.Serialization;
 
 namespace videogame_api.Models
 {
+    /* Contains the enums for the age ratings, game ratings, and exclusivity.
+     Enum objects are reversed, so that they call the name and not the 
+     integer correlated to the name. */
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum AgeRatings
     {

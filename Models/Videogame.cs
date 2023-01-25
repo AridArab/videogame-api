@@ -7,6 +7,8 @@ namespace videogame_api.Models
 {
     public class Videogame
     {
+        /* Properties for the videogame objects.
+         The class has been migrated to the database. */
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public Genres Genre { get; set; } = Genres.Platformer;

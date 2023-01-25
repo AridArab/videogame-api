@@ -7,6 +7,7 @@ namespace videogame_api
 {
     public class AutoMapperProfile : Profile
     {
+        // Profile created to allow for conversion between the data transfer objects and database.
         public AutoMapperProfile()
         {
             CreateMap<Videogame, GetVideogameDto>();

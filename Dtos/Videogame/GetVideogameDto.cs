@@ -7,6 +7,7 @@ namespace videogame_api.Dtos.Videogame
 {
     public class GetVideogameDto
     {
+        /* Data transfer object for when retrieving the database entry. */
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public Genres Genre { get; set; } = Genres.Platformer;

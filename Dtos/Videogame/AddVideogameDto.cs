@@ -7,6 +7,8 @@ namespace videogame_api.Dtos.Videogame
 {
     public class AddVideogameDto
     {
+        /* Data transfer object for when a entry into the database is create.
+        Does not contain a property for the id as that is generated automatically. */
         public string Name { get; set; } = string.Empty;
         public Genres Genre { get; set; } = Genres.Platformer;
         public bool Multiplayer { get; set; } = false;
