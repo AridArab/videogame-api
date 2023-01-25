@@ -10,7 +10,7 @@ namespace videogame_api.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            
+            /*Options go in here*/
         }
 
 

@@ -135,7 +135,7 @@ namespace videogame_api.Services.VideogameService
                 var games = await _context.Videogames.Where(g => g.Genre == genre).ToListAsync();
                 if (games == null)
                 {
-                    throw new Exception($"Genre '{genre}' not valid. Please input a valid genre.");
+                    throw new Exception($"Genre '{genre}' is either not found in database or not valid, Please try again.");
                 }
 
                 serviceResponse.Data = _mapper.Map<List<GetVideogameDto>>(games);
@@ -159,7 +159,7 @@ namespace videogame_api.Services.VideogameService
                 var games = await _context.Videogames.Where(g => g.AgeRating == rating).ToListAsync();
                 if (games == null)
                 {
-                    throw new Exception($"Age rating '{rating}' not valid. Please input a valid age rating.");
+                    throw new Exception($"Age rating '{rating}' is either not found in database or not valid, Please try again.");
                 }
 
                 serviceResponse.Data = _mapper.Map<List<GetVideogameDto>>(games);
@@ -183,7 +183,7 @@ namespace videogame_api.Services.VideogameService
                 var games = await _context.Videogames.Where(g => g.GameRating == rating).ToListAsync();
                 if (games == null)
                 {
-                    throw new Exception($"Game rating '{rating}' not valid. Please input a valid game rating");
+                    throw new Exception($"Game rating '{rating}' is either not found in database or not valid, Please try again.");
                 }
 
                 serviceResponse.Data = _mapper.Map<List<GetVideogameDto>>(games);
