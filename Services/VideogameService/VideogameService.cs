@@ -12,15 +12,7 @@ namespace videogame_api.Services.VideogameService
     {
         private static List<Videogame> games = new List<Videogame>
         {
-            new Videogame {
-                Id = 1,
-                Name = "Halo 3",
-                Genre = Genres.Shooter,
-                Multiplayer = true,
-                AgeRating = AgeRatings.Mature,
-                GameRating = GameRatings.OverwhelminglyPositive,
-                Exclusive = Exclusives.Xbox
-            }
+            new Videogame()
         };
         private readonly IMapper _mapper;
         private readonly DataContext _context;
@@ -37,6 +29,7 @@ namespace videogame_api.Services.VideogameService
             var serviceResponse = new ServiceResponse<List<GetVideogameDto>>();
             var dbVideogames = await _context.Videogames.ToListAsync();
             serviceResponse.Data = dbVideogames.Select(g => _mapper.Map<GetVideogameDto>(g)).ToList();
+            serviceResponse.Message = "Entries successfully loaded.";
             return serviceResponse;
         }
 
@@ -45,6 +38,7 @@ namespace videogame_api.Services.VideogameService
             var serviceResponse = new ServiceResponse<GetVideogameDto>();
             var dbVideogame = await _context.Videogames.FirstOrDefaultAsync(g => g.Id == id);
             serviceResponse.Data = _mapper.Map<GetVideogameDto>(dbVideogame);
+            serviceResponse.Message = "Entry successfully loaded.";
             return serviceResponse;
         }
 
@@ -54,8 +48,8 @@ namespace videogame_api.Services.VideogameService
             var newGame = _mapper.Map<Videogame>(game);
             await _context.Videogames.AddAsync(newGame);
             await _context.SaveChangesAsync();
-            games.Add(_mapper.Map<Videogame>(newGame));
             serviceResponse.Data = games.Select(g => _mapper.Map<GetVideogameDto>(g)).ToList();
+            serviceResponse.Message = "Entry successfully created.";
             return serviceResponse;
         }
 
@@ -76,6 +70,7 @@ namespace videogame_api.Services.VideogameService
                     await _context.SaveChangesAsync();
                     var games = await _context.Videogames.ToListAsync();
                     serviceResponse.Data =  games.Select(g => _mapper.Map<GetVideogameDto>(g)).ToList();
+                    serviceResponse.Message = "Entry successfully Deleted.";
                 }
                 
 
@@ -87,6 +82,7 @@ namespace videogame_api.Services.VideogameService
                 serviceResponse.Success = false;
                 serviceResponse.Message = ex.Message;
             }
+
 
             return serviceResponse;
             
@@ -114,6 +110,7 @@ namespace videogame_api.Services.VideogameService
                 await _context.SaveChangesAsync();
 
                 serviceResponse.Data = _mapper.Map<GetVideogameDto>(game);
+                serviceResponse.Message = "Entry successfully updated.";
             }
 
             catch (Exception ex)
@@ -121,7 +118,7 @@ namespace videogame_api.Services.VideogameService
                 serviceResponse.Success = false;
                 serviceResponse.Message = ex.Message;
             }
-
+            
             return serviceResponse;
 
         }
@@ -139,6 +136,7 @@ namespace videogame_api.Services.VideogameService
                 }
 
                 serviceResponse.Data = _mapper.Map<List<GetVideogameDto>>(games);
+                serviceResponse.Message = "Entries successfully loaded.";
             }
 
             catch (Exception ex)
@@ -163,6 +161,7 @@ namespace videogame_api.Services.VideogameService
                 }
 
                 serviceResponse.Data = _mapper.Map<List<GetVideogameDto>>(games);
+                serviceResponse.Message = "Entries successfully loaded.";
             }
 
             catch (Exception ex)
@@ -187,6 +186,7 @@ namespace videogame_api.Services.VideogameService
                 }
 
                 serviceResponse.Data = _mapper.Map<List<GetVideogameDto>>(games);
+                serviceResponse.Message = "Entries successfully loaded.";
             }
 
             catch (Exception ex)
@@ -211,6 +211,7 @@ namespace videogame_api.Services.VideogameService
                 }
 
                 serviceResponse.Data = _mapper.Map<List<GetVideogameDto>>(games);
+                serviceResponse.Message = "Entries successfully loaded.";
             }
 
             catch (Exception ex)
