@@ -23,16 +23,34 @@ namespace videogame_api.Controllers
         {
             return Ok(await _videogameService.GetAllVideogames());
         }
-        [HttpGet("{id:guid}")]
+        [HttpGet("IDSearch/{id:guid}")]
         public async Task<ActionResult<ServiceResponse<GetVideogameDto>>> Get(int id)
         {
             return Ok(await _videogameService.GetVideogame(id));
         }
 
-        [HttpGet("{genre}")]
-        public async Task<ActionResult<ServiceResponse<GetVideogameDto>>> GetGenre(Genres genre)
+        [HttpGet("GenreSearch/{genre}")]
+        public async Task<ActionResult<ServiceResponse<List<GetVideogameDto>>>> GetGenre(Genres genre)
         {
             return Ok(await _videogameService.GetVideogameByGenre(genre));
+        }
+
+        [HttpGet("AgeRatingSearch/{rating}")]
+        public async Task<ActionResult<ServiceResponse<List<GetVideogameDto>>>> GetRating(AgeRatings rating)
+        {
+            return Ok(await _videogameService.GetVideogameByRating(rating));
+        }
+
+        [HttpGet("GameRatingSearch/{rating}")]
+        public async Task<ActionResult<ServiceResponse<List<GetVideogameDto>>>> GetReview(GameRatings rating)
+        {
+            return Ok(await _videogameService.GetVideogameByReview(rating));
+        }
+
+        [HttpGet("ExclusiveSearch/{exclusive}")]
+        public async Task<ActionResult<ServiceResponse<List<GetVideogameDto>>>> GetExclusive(Exclusives exclusive)
+        {
+            return Ok(await _videogameService.GetVideogameByExclusive(exclusive));
         }
 
 

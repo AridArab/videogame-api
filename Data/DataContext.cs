@@ -13,6 +13,7 @@ namespace videogame_api.Data
             
         }
 
+
         public DbSet<Videogame> Videogames => Set<Videogame>();
     }
 }

@@ -1,3 +1,4 @@
+using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System;
 using System.Collections.Generic;
@@ -92,9 +93,6 @@ namespace videogame_api.Services.VideogameService
         }
 
 
-
-
-
         public async Task<ServiceResponse<GetVideogameDto>> UpdateVideogame(UpdateVideogameDto updatedVideogame)
         {
             var serviceResponse = new ServiceResponse<GetVideogameDto>();
@@ -128,7 +126,7 @@ namespace videogame_api.Services.VideogameService
 
         }
 
-        async Task<ServiceResponse<List<GetVideogameDto>>> IVideogameService.GetVideogameByGenre(Genres genre)
+        public async Task<ServiceResponse<List<GetVideogameDto>>> GetVideogameByGenre(Genres genre)
         {
             var serviceResponse = new ServiceResponse<List<GetVideogameDto>>();
             
@@ -149,6 +147,78 @@ namespace videogame_api.Services.VideogameService
                 serviceResponse.Message = ex.Message;
             }
         
+            return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<List<GetVideogameDto>>> GetVideogameByRating(AgeRatings rating)
+        {
+            var serviceResponse = new ServiceResponse<List<GetVideogameDto>>();
+            
+
+            try {
+                var games = await _context.Videogames.Where(g => g.AgeRating == rating).ToListAsync();
+                if (games == null)
+                {
+                    throw new Exception($"Age rating '{rating}' not valid. Please input a valid age rating.");
+                }
+
+                serviceResponse.Data = _mapper.Map<List<GetVideogameDto>>(games);
+            }
+
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+        
+            return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<List<GetVideogameDto>>> GetVideogameByReview(GameRatings rating)
+        {
+            var serviceResponse = new ServiceResponse<List<GetVideogameDto>>();
+
+
+            try {
+                var games = await _context.Videogames.Where(g => g.GameRating == rating).ToListAsync();
+                if (games == null)
+                {
+                    throw new Exception($"Game rating '{rating}' not valid. Please input a valid game rating");
+                }
+
+                serviceResponse.Data = _mapper.Map<List<GetVideogameDto>>(games);
+            }
+
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+
+            return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<List<GetVideogameDto>>> GetVideogameByExclusive(Exclusives exclusive)
+        {
+            var serviceResponse = new ServiceResponse<List<GetVideogameDto>>();
+
+
+            try {
+                var games = await _context.Videogames.Where(g => g.Exclusive == exclusive).ToListAsync();
+                if (games == null)
+                {
+                    throw new Exception($"Exclusivity '{exclusive}' is either not found in database or not valid, Please try again.");
+                }
+
+                serviceResponse.Data = _mapper.Map<List<GetVideogameDto>>(games);
+            }
+
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+
             return serviceResponse;
         }
     }
