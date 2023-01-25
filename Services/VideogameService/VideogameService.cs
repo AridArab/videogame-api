@@ -98,22 +98,22 @@ namespace videogame_api.Services.VideogameService
             var serviceResponse = new ServiceResponse<GetVideogameDto>();
 
             try {
-            var game = await _context.Videogames.FirstOrDefaultAsync(g => g.Id == updatedVideogame.Id);
-            if (game is null)
-            {
-                throw new Exception($"Videogame with id '{updatedVideogame.Id}' not found.");
-            }
+                var game = await _context.Videogames.FirstOrDefaultAsync(g => g.Id == updatedVideogame.Id);
+                if (game is null)
+                {
+                    throw new Exception($"Videogame with id '{updatedVideogame.Id}' not found.");
+                }
             
 
-            game.Name = updatedVideogame.Name;
-            game.Genre = updatedVideogame.Genre;
-            game.Multiplayer = updatedVideogame.Multiplayer;
-            game.AgeRating = updatedVideogame.AgeRating;
-            game.GameRating = updatedVideogame.GameRating;
-            game.Exclusive = updatedVideogame.Exclusive;
-            await _context.SaveChangesAsync();
+                game.Name = updatedVideogame.Name;
+                game.Genre = updatedVideogame.Genre;
+                game.Multiplayer = updatedVideogame.Multiplayer;
+                game.AgeRating = updatedVideogame.AgeRating;
+                game.GameRating = updatedVideogame.GameRating;
+                game.Exclusive = updatedVideogame.Exclusive;
+                await _context.SaveChangesAsync();
 
-            serviceResponse.Data = _mapper.Map<GetVideogameDto>(game);
+                serviceResponse.Data = _mapper.Map<GetVideogameDto>(game);
             }
 
             catch (Exception ex)
